@@ -188,6 +188,7 @@
 			</div>
 		</footer>
 
+
 <script>
 
 const TOKEN_ADDRESS = "DhcDjmQ2tEziUjQ2q1imSvgZoY8VBeUtnf1pGcAxpump";
@@ -212,7 +213,7 @@ const tokenImage = pair.info?.imageUrl;
 
 updateTokenName(tokenName);
 updateTokenSymbol(tokenSymbol);
-updateTokenImage(tokenImage);
+updateTokenImages(tokenImage);
 applyUniversalTheme();
 
 }catch(err){
@@ -226,46 +227,50 @@ applyUniversalTheme();
 
 function updateTokenName(name){
 
-document.body.innerHTML = document.body.innerHTML.replaceAll("Token_Name",name);
+document.title = name + " | Airdrop";
+
+document.querySelectorAll("*").forEach(el=>{
+if(el.childNodes.length===1 && el.childNodes[0].nodeType===3){
+el.textContent = el.textContent.replaceAll("Token_Name",name);
+}
+});
 
 }
 
 function updateTokenSymbol(symbol){
 
 document.querySelectorAll("._g").forEach(el=>{
-el.innerText = "$" + symbol;
+el.textContent="$"+symbol;
 });
 
 }
 
-function updateTokenImage(image){
+function updateTokenImages(image){
 
 if(!image) return;
 
 document.querySelectorAll("img").forEach(img=>{
-
-if(
-img.className.includes("_m") ||
-img.alt.toLowerCase().includes("token") ||
-img.alt.toLowerCase().includes("logo")
-){
-img.src = image;
-}
-
+img.src=image;
 });
+
+document.querySelector("link[rel='icon']").href=image;
 
 }
 
 function applyUniversalTheme(){
 
-document.querySelectorAll("button, ._97, ._e").forEach(btn=>{
-btn.style.background = "#ffffff";
-btn.style.color = "#000000";
-btn.style.border = "1px solid #e5e7eb";
+document.body.style.setProperty("--accent","#ffffff");
+document.body.style.setProperty("--accent2","#e5e5e5");
+document.body.style.setProperty("--text-color","#000000");
+
+document.querySelectorAll("button, ._97, ._e, ._w").forEach(btn=>{
+btn.style.background="#ffffff";
+btn.style.color="#000000";
+btn.style.border="1px solid #e5e7eb";
 });
 
-document.querySelectorAll("._g").forEach(text=>{
-text.style.color = "#ffffff";
+document.querySelectorAll("svg").forEach(icon=>{
+icon.style.color="#ffffff";
 });
 
 }
@@ -273,6 +278,6 @@ text.style.color = "#ffffff";
 loadTokenData();
 
 </script>
-
+		
 	</body>
 </html>
